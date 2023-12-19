@@ -23,23 +23,23 @@ if __name__ == "__main__":
         print(f"Employee with ID {employee_id} not found.")
         sys.exit(1)
 
-    employee_name = user_data["name"]
+    EMPLOYEE_NAME = user_data["name"]
     # Fetch user's TODO list
     todo_url = f"{base_url}/{employee_id}/todos"
     todo_response = requests.get(todo_url)
     todo_data = todo_response.json()
 
     # Calculate TODO list and completed todo list
-    total_tasks = len(todo_data)
-    done_tasks = sum(task["completed"] for task in todo_data)
+    TOTAL_NUMBER_OF_TASKS = len(todo_data)
+    NUMBER_OF_DONE_TASKS = sum(task["completed"] for task in todo_data)
 
     # Display progress information
-    print(f"Employee {employee_name} is done with tasks "
-          f"({done_tasks}/{total_tasks}):")
+    print(f"Employee {EMPLOYEE_NAME} is done with tasks "
+          f"({NUMBER_OF_DONE_TASKS}/{TOTAL_NUMBER_OF_TASKS}):")
 
     # Display titles of completed tasks
     completed_tasks = [task["title"]
                        for task in todo_data if task["completed"]]
 
-    for task_title in completed_tasks:
-        print(f"\t{task_title}")
+    for TASK_TITLE in completed_tasks:
+        print(f"\t{TASK_TITLE}")
