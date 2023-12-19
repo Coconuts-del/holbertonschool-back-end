@@ -6,36 +6,24 @@
 import requests
 import sys
 
-
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print(f"Usage: python3 {__file__} employee_id(int)")
         sys.exit(1)
 
+    BASE_URL = "https://jsonplaceholder.typicode.com"
     EMPLOYEE_ID = int(sys.argv[1])
-    # Fetch user data
-    BASE_URL = "https://jsonplaceholder.typicode.com/users"
-    USER_URL = f"{BASE_URL}/{EMPLOYEE_ID}"
 
-    # Fetch user data
-    USER_RESPONSE = requests.get(USER_URL)
-    USER_DATA = USER_RESPONSE.json()
-    if not USER_DATA:
-        print(f"Employee with ID {EMPLOYEE_ID} not found.")
-        sys.exit(1)
-
-    EMPLOYEE_NAME = USER_DATA["name"]
-    # Fetch user's TODO list
-    TODO_URL = f"{BASE_URL}/{EMPLOYEE_ID}/todos"
-    TODO_RESPONSE = requests.get(TODO_URL)
-    TODO_DATA = TODO_RESPONSE.json()
+    # Fetch  todo list of an employee
+    EMPLOYEE_TODOS = requests.get(f"{BASE_URL}/users/{EMPLOYEE_ID}/todos",
+                                  params={"_expand": "user"})
+    TODO_DATA = EMPLOYEE_TODOS.json()
+    EMPLOYEE_NAME = TODO_DATA[0]["user"]["name"]
 
     # Calculate TODO list and completed todo list
     TOTAL_NUMBER_OF_TASKS = len(TODO_DATA)
-    # NUMBER_OF_DONE_TASKS = sum(task["completed"] for task in TODO_DATA)
     NUMBER_OF_DONE_TASKS = 0
     TASK_TITLE = []
-
     for task in TODO_DATA:
         if task["completed"]:
             NUMBER_OF_DONE_TASKS += 1
