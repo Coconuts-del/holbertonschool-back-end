@@ -30,7 +30,7 @@ if __name__ == "__main__":
             TASK_TITLE.append(task["title"])
 
     # Display progress information
-    print(f"Employee {EMPLOYEE_NAME} is done with tasks "
+    print(f"Employee {EMPLOYEE_NAME} is done with tasks"
           f"({NUMBER_OF_DONE_TASKS}/{TOTAL_NUMBER_OF_TASKS}):")
 
     # Display titles of completed tasks
